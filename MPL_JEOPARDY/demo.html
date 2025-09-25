@@ -67,7 +67,9 @@
         .card-maths::before { background-image: url('https://cdn.prod.website-files.com/6744bdb342b0a7660e7b7c7d/6834cbb655e09ee0008f6474_67df5face1f96bebc07f8f2b_3b23b533-c408-4380-bce6-0820b89131e9_math-on-board.webp'); }
         .card-songs::before { background-image: url('https://img.freepik.com/free-photo/people-emotions-lifestyle-leisure-beauty-concept-carefree-happy-asian-woman-listening-music-wireless-headphones-holding-mobile-phone-singing-along-favorite-song-yellow-background_1258-58931.jpg'); }
         .card-games::before { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Uk_5jeNuZqmqPMnMWLRqq4lKf4oiPS8bmg&s'); }
-        
+        .card-tiebreaker::before { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-break-eps-file-vector-created-to-be-used-many-things-like-arts-crafts-buy-now-159514531.jpg'); }
+        .card-rapidfire::before { background-image: url('https://media.istockphoto.com/id/477829291/vector/speedometer-on-fire.jpg?s=612x612&w=0&k=20&c=XzfE1dhrlyfoMnrRNPpUoigED3hj46n8NllI8yNfSd8='); }
+
         .card-content {
             position: relative;
             z-index: 10;
@@ -106,7 +108,7 @@
     </h1>
 
     <main class="flex-1 flex flex-col items-center justify-center w-full max-w-6xl">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 w-full place-items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-24 gap-y-16 w-full place-items-center">
             <a href="./Questions/Sports.html" 
             class="card-container rounded-xl w-72 h-52 flex items-center justify-center text-center group card-sports" 
             data-track="sports" onclick="handleCardClick(event, this)">
@@ -127,6 +129,12 @@
                 </div>
             </a>
 
+            <a href="./Questions/TieBreaker.html" class="card-container rounded-xl w-72 h-52 flex items-center justify-center text-center group card-tiebreaker" data-track="tiebreaker" onclick="handleCardClick(event, this)">
+                <div class="card-content">
+                    <h2 class="text-3xl font-bold">TIEBREAKER</h2>
+                </div>
+            </a>
+
             <a href="./Questions/Maths.html" class="card-container rounded-xl w-72 h-52 flex items-center justify-center text-center group card-maths" data-track="maths" onclick="handleCardClick(event, this)">
                 <div class="card-content">
                     <h2 class="text-3xl font-bold mb-4">MATHS</h2>
@@ -142,6 +150,12 @@
             <a href="./Questions/Games.html" class="card-container rounded-xl w-72 h-52 flex items-center justify-center text-center group card-games" data-track="games" onclick="handleCardClick(event, this)">
                 <div class="card-content">
                     <h2 class="text-3xl font-bold mb-4">GAMES</h2>
+                </div>
+            </a>
+
+            <a href="./Questions/RapidFire.html" class="card-container rounded-xl w-72 h-52 flex items-center justify-center text-center group card-rapidfire" data-track="rapidfire" onclick="handleCardClick(event, this)">
+                <div class="card-content">
+                    <h2 class="text-3xl font-bold">RAPID FIRE</h2>
                 </div>
             </a>
         </div>
@@ -175,6 +189,8 @@
                 maths: ['➕', '➖', '✖️', '➗', '📈', '🧮'],
                 songs: ['🎵', '🎶', '🎤', '🎧', '🎸'],
                 games: ['🎮', '🕹️', '🎲', '👾', '🎯'],
+                tiebreaker: ['🤝', '🔗', '⚖️', '🏆', '💯'],
+                rapidfire: ['🔥', '⚡', '💥', '💨', '🚀'],
             };
             
             const colorsSet = {
@@ -184,6 +200,8 @@
                 maths: ['#c0d9d9', '#a0c0c0', '#b5c6c6', '#d0e0e0'],
                 songs: ['#ffc0cb', '#f55d9d', '#ff69b4', '#d8bfd8'],
                 games: ['#90ee90', '#afeeee', '#f0e68c', '#add8e6'],
+                tiebreaker: ['#ffffff', '#0077b6', '#00b4d8', '#90e0ef'],
+                rapidfire: ['#ff8800', '#ffc300', '#ff5733', '#c70039'],
             };
 
             const shapes = getEmojiShapes(emojiSet[track] || []);

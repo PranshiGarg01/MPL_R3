@@ -39,6 +39,10 @@ $(document).ready(function() {
             isWildCard = true;
         } else if(category === "Songs" && index === 4){
             isWildCard = true;
+        } else if(category === "rf" && (index === 7)){
+            isWildCard = true;
+        } else if(category === "tb" && (index === 6)){
+            isWildCard = true
         }
 
         // Check for the Games track and the Wild Card
@@ -148,6 +152,28 @@ $(document).ready(function() {
         startTimer(40000); // 40 seconds
     });
 
+    //FOR TIE BREAKER:
+    $("#tbRevealButton").on("click", function() {
+        const questionText = "What is the name of a mathematical knot that cannot be unknotted without cutting it?";
+        $("#wildcardPopup").css("display", "none");
+        $("#revealedQuestionText").text(questionText);
+        $("#questionPopup").css("display", "flex");
+
+        // Start the timer when the question is revealed
+        startTimer(30000); // 40 seconds
+    });
+
+    //FOR RAPID FIRE:
+    $("#rfRevealButton").on("click", function() {
+        const questionText = "What is the capital of France?";
+        $("#wildcardPopup").css("display", "none");
+        $("#revealedQuestionText").text(questionText);
+        $("#questionPopup").css("display", "flex");
+
+        // Start the timer when the question is revealed
+        startTimer(15000); // 40 seconds
+    });
+
     // FOR SPORTS:
     $("#sportsRevealButton").on("click", function() {
         const audio = "../assets/sports_100.mp3";
@@ -196,13 +222,21 @@ $(document).ready(function() {
     }
 
     function startQuestionTimer(points) {
-        const duration = points / 10;
         const timesUpPopup = $("#timesUpPopup");
-
         clearTimeout(window.questionTimer);
+        let durationInSeconds;
+
+        if (category === "rf") {
+            // Hardcode 15 seconds for the "Rapid Fire" category
+            durationInSeconds = 15;
+        } else {
+            // Calculate duration for other categories (100 points = 10s, 200 points = 20s, etc.)
+            durationInSeconds = points / 10;
+        }
+
         window.questionTimer = setTimeout(function() {
             timesUpPopup.css("display", "flex");
-        }, duration * 1000);
+        }, durationInSeconds * 1000);
     }
 
     $("#timesUpPopup button").on("click", function() {

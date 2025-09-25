@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiebreaker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            background-image: radial-gradient(#333333 1px, transparent 1px),
+                              radial-gradient(#333333 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            animation: move-stars 150s linear infinite;
+        }
+
+        @keyframes move-stars {
+            from { background-position: 0 0, 20px 20px; }
+            to { background-position: -400px -400px, -380px -380px; }
+        }
+
+        .card-container {
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+        }
+
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 2px solid #333333;
+            box-shadow: 0 0 10px 2px #4d4d4d;
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, rgba(51, 51, 51, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+            color: #fff;
+        }
+
+        .card-back {
+            background-color: #333333;
+            color: #ffffff;
+            transform: rotateY(180deg);
+        }
+
+        .cta-button {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            background-color: #4d4d4d;
+            color: #ffffff;
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .popup-content {
+            background-color: #1a1a1a;
+            border: 2px solid #333333;
+            box-shadow: 0 0 20px 5px #4d4d4d;
+            color: #ffffff;
+        }
+        
+        /* New: Blur effect for the question text */
+        .blurred-text {
+            filter: blur(5px);
+            transition: filter 0.5s ease-in-out;
+        }
+
+        /* New: Animation for Time's Up Popup */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+
+    <nav class="w-full max-w-7xl flex items-center bg-[#1a1a1a] bg-opacity-70 p-4 rounded-xl shadow-lg border border-[#333333] mb-8">
+        <a href="#" class="h-20 w-20 mr-4 flex-shrink-0">
+            <img src="https://github.com/SIAM-VIT/MPL-Jeopardy-Rd3/blob/main/github/Images/Logo.png?raw=true" alt="Logo" class="rounded-full w-full h-full">
+        </a>
+        <div class="flex items-center space-x-12 ml-auto">
+            <a href="#" class="text-white hover:text-[#4d4d4d] transition-colors duration-300 text-lg">Home</a>
+            <a href="#" class="text-white hover:text-[#4d4d4d] transition-colors duration-300 text-lg">Powerup</a>
+            <a href="#" class="text-white hover:text-[#4d4d4d] transition-colors duration-300 text-lg">Reset</a>
+            <button class="bg-[#333333] hover:bg-[#4d4d4d] text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors duration-300 text-lg">
+                Scoreboard
+            </button>
+        </div>
+    </nav>
+    
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-8 text-center">
+        TIE<span class="text-[#333333] border-b-2 border-dashed border-[#4d4d4d]">BREAKER</span>
+    </h1>
+
+    <main class="flex-1 flex flex-col items-center justify-center w-full max-w-6xl">
+        <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 w-full place-items-center">
+            
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-1">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 1</h2>
+                        <p class="text-2xl mt-2">100</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">What is the capital of Australia?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-2">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 2</h2>
+                        <p class="text-2xl mt-2">200</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">What is the largest organ in the human body?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-3">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 3</h2>
+                        <p class="text-2xl mt-2">300</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">Who wrote the novel 'To Kill a Mockingbird'?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-4">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 4</h2>
+                        <p class="text-2xl mt-2">400</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">What is the chemical symbol for gold?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-5">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 5</h2>
+                        <p class="text-2xl mt-2">500</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">Which planet is known as the "Red Planet"?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-6">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 6</h2>
+                        <p class="text-2xl mt-2">600</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">What is the highest mountain in Africa?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-7">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 7</h2>
+                        <p class="text-2xl mt-2">700</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">WILD CARD! <br> BETTER GET BIDDING!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-8">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 8</h2>
+                        <p class="text-2xl mt-2">800</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">Who painted the Mona Lisa?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group tb">
+                <div class="card-inner tb-card-9">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 9</h2>
+                        <p class="text-2xl mt-2">900</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-white font-normal mb-4">In what year did the Titanic sink?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="wildcardPopup" class="popup-overlay">
+        <div class="popup-content bg-[#1a1a1a] p-8 rounded-lg text-center max-w-lg w-full">
+            <h3 class="text-2xl font-bold mb-4">BIDDING DONE?</h3>
+            <button id="tbRevealButton" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300">
+                Reveal Question
+            </button>
+        </div>
+    </div>
+
+    <div id="questionPopup" class="popup-overlay">
+        <div class="popup-content bg-[#1a1a1a] p-8 rounded-lg text-center max-w-xl w-full">
+            <h2 class="text-2xl font-bold mb-4">Question</h2>
+            <p id="revealedQuestionText" class="text-xl mb-6 leading-relaxed"></p>
+            <button id="closeQuestionButton" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 mt-4">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <div id="timesUpPopup" class="popup-overlay">
+        <div class="popup-content bg-[#1a1a1a] p-8 rounded-lg text-center max-w-md w-full">
+            <h2 class="text-4xl font-bold mb-4 text-white animate-pulse">TIME'S UP!</h2>
+            <button id="closeTimesUpButton" class="bg-gray-800 hover:bg-black text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 mt-4">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./Cards.js"></script>
+</body>
+</html>
