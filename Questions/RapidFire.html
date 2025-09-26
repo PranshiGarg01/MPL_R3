@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapid Fire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #1a1a1a; /* Dark gray background */
+            color: #e0e0e0; /* Light gray text */
+            /* Starry background effect with a silver hue */
+            background-image: radial-gradient(#ffffff22 1px, transparent 1px),
+                              radial-gradient(#ffffff22 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            animation: move-stars 150s linear infinite;
+        }
+
+        @keyframes move-stars {
+            from { background-position: 0 0, 20px 20px; }
+            to { background-position: -400px -400px, -380px -380px; }
+        }
+
+        .card-container {
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+        }
+
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 2px solid #a9a9a9; /* Darker silver border */
+            box-shadow: 0 0 10px 2px #d3d3d3; /* Lighter silver glow */
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, rgba(169, 169, 169, 0.2) 0%, rgba(26, 26, 26, 0.8) 100%);
+            color: #fff;
+        }
+
+        .card-back {
+            background-color: #a9a9a9; /* Darker silver back */
+            color: #1a1a1a; /* Dark text for contrast */
+            transform: rotateY(180deg);
+        }
+        
+        .cta-button {
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            background-color: #cccccc; /* Lighter shade on hover */
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .popup-content {
+            background-color: #2b2b2b;
+            border: 2px solid #a9a9a9;
+            box-shadow: 0 0 20px 5px #d3d3d3;
+            color: #e0e0e0;
+        }
+
+        .blurred-text {
+            filter: blur(5px);
+            transition: filter 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+
+    <nav class="w-full max-w-7xl flex items-center bg-[#1a1a1a] bg-opacity-70 p-4 rounded-xl shadow-lg border border-[#a9a9a9] mb-8">
+        <a href="#" class="h-20 w-20 mr-4 flex-shrink-0">
+            <img src="https://github.com/SIAM-VIT/MPL-Jeopardy-Rd3/blob/main/github/Images/Logo.png?raw=true" alt="Logo" class="rounded-full w-full h-full">
+        </a>
+        <div class="flex items-center space-x-12 ml-auto">
+            <a href="../demo.html" class="text-white hover:text-[#d3d3d3] transition-colors duration-300 text-lg">Home</a>
+            <a href="#" class="text-white hover:text-[#d3d3d3] transition-colors duration-300 text-lg">Powerup</a>
+            <a href="#" class="text-white hover:text-[#d3d3d3] transition-colors duration-300 text-lg">Reset</a>
+            <a href="../Scoreboard/Scoreboard.html">
+                <button class="bg-[#d3d3d3] hover:bg-[#cccccc] text-[#1a1a1a] font-bold py-3 px-8 rounded-full shadow-md transition-colors duration-300 text-lg">
+                    Scoreboard
+                </button>
+            </a>
+        </div>
+    </nav>
+    
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-8 text-center">
+        RAPID <span class="text-[#a9a9a9] border-b-2 border-dashed border-[#d3d3d3]">FIRE</span>
+    </h1>
+
+    <main class="flex-1 flex flex-col items-center justify-center w-full max-w-6xl">
+        <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 w-full place-items-center">
+            
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-1">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 1</h2>
+                        <p class="text-2xl mt-2">100</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">What is the official number of holes that appear on SpongeBob SquarePants' body? </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-2">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 2</h2>
+                        <p class="text-2xl mt-2">200</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">What is the exact run time, in minutes, of the original 1997 movie Titanic?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-3">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 3</h2>
+                        <p class="text-2xl mt-2">300</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">How many earths can be fit inside hollow jupiter</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-4">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 4</h2>
+                        <p class="text-2xl mt-2">400</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">What is the on screen kill count of john wick in all 4 chapters together</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-5">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 5</h2>
+                        <p class="text-2xl mt-2">500</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">what is the total number of different species of Pokémon according to the pokedex</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-6">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 6</h2>
+                        <p class="text-2xl mt-2">600</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">In the cars movie what was Doc Hudon’s racing number?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-7">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 7</h2>
+                        <p class="text-2xl mt-2">700</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">In which year was Michael Jackson born?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-8">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 8</h2>
+                        <p class="text-2xl mt-2">800</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">How many acres is the campus of vit vellore?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container rounded-xl w-80 h-60 text-center group rf">
+                <div class="card-inner rf-card-9">
+                    <div class="card-front flex flex-col items-center justify-center p-4">
+                        <h2 class="text-3xl font-bold">QUESTION 9</h2>
+                        <p class="text-2xl mt-2">900</p>
+                    </div>
+                    <div class="card-back flex flex-col items-center justify-center p-4">
+                        <p class="text-2xl text-[#1a1a1a] font-normal mb-4">What is the capital of France?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="wildcardPopup" class="popup-overlay">
+        <div class="popup-content p-8 rounded-xl text-center">
+            <h3 class="text-2xl font-bold mb-4">BIDDING DONE?</h3>
+            <button id="rfRevealButton" class="cta-button bg-[#d3d3d3] hover:bg-[#cccccc] text-[#1a1a1a] font-bold py-2 px-6 rounded-full shadow-md">
+                Reveal Question
+            </button>
+        </div>
+    </div>
+
+    <div id="questionPopup" class="popup-overlay">
+        <div class="popup-content revealed-question-content p-8 rounded-xl text-center">
+            <h3 class="text-2xl font-bold mb-4">Question</h3>
+            <p id="revealedQuestionText" class="text-3xl font-bold"></p>
+            <button id="closeQuestionButton" class="cta-button bg-[#d3d3d3] hover:bg-[#cccccc] text-[#1a1a1a] font-bold py-2 px-6 rounded-full shadow-md mt-4">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <div id="timesUpPopup" class="popup-overlay">
+        <div class="popup-content p-8 rounded-xl text-center">
+            <h3 class="text-2xl font-bold mb-4">TIME'S UP!</h3>
+            <p>The time has run out.</p>
+            <button class="cta-button bg-[#d3d3d3] hover:bg-[#cccccc] text-[#1a1a1a] font-bold py-2 px-6 rounded-full mt-4">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./Cards.js"></script>
+
+</body>
+</html> 

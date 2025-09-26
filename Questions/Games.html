@@ -141,29 +141,15 @@
         />
       </a>
       <div class="flex items-center space-x-12 ml-auto">
-        <a
-          href="../demo.html"
-          class="text-white hover:text-red-400 transition-colors duration-300 text-lg"
-          >Home</a
-        >
-        <a
-          href="#"
-          class="text-white hover:text-red-400 transition-colors duration-300 text-lg"
-          >Powerup</a
-        >
-        <a
-          href="#"
-          class="text-white hover:text-red-400 transition-colors duration-300 text-lg"
-          >Reset</a
-        >
-        <a href="../Scoreboard/Scoreboard.html">
-          <button
-            class="bg-red-500 hover:bg-red-400 text-[#0d0a00] font-bold py-3 px-8 rounded-full shadow-md transition-colors duration-300 text-lg"
-          >
-            Scoreboard
-          </button>
-        </a>
-      </div>
+            <a href="./demo.html" class="text-white hover:text-red-400 transition-colors duration-300 text-lg">Home</a>
+            <a href="#" id="powerupBtnGames" class="text-white hover:text-red-400 transition-colors duration-300 text-lg">Powerup</a>
+            <a href="./demo.html" id="resetBtn" class="text-white hover:text-red-400 transition-colors duration-300 text-lg">Reset</a>
+            <a href="./Scoreboard/Scoreboard.html">
+                <button class="bg-red-500 hover:bg-red-400 text-[#0d0a00] font-bold py-3 px-8 rounded-full shadow-md transition-colors duration-300 text-lg">
+                    Scoreboard
+                </button>
+            </a>
+        </div>
     </nav>
 
     <h1
@@ -340,6 +326,13 @@
           Close
         </button>
       </div>
+    </div>
+
+    <!-- Reward Popup  -->
+    <div id="rewardPopupGames" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-red-500 hover:bg-red-400 text-[#0d0a00] font-bold text-3xl p-12 rounded-2xl shadow-2xl animate-bounce shadow-md mt-4">
+        🏆 Bonus unlocked: Steal 100 points from a team of your choosing! 🏆
+    </div>
     </div>
 
     <script
