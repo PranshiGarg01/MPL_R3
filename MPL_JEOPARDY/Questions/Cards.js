@@ -39,11 +39,12 @@ $(document).ready(function() {
             isWildCard = true;
         } else if(category === "Songs" && index === 4){
             isWildCard = true;
-        } else if(category === "rf" && (index === 7)){
-            isWildCard = true;
-        } else if(category === "tb" && (index === 6)){
-            isWildCard = true
-        }
+        } 
+        // else if(category === "rf" && (index === 7)){
+        //     isWildCard = true;
+        // } else if(category === "tb" && (index === 6)){
+        //     isWildCard = true
+        // }
 
         // Check for the Games track and the Wild Card
         if (isWildCard) {
@@ -106,7 +107,7 @@ $(document).ready(function() {
         $("#questionPopup").css("display", "flex");
         
         // Start the timer when the question is revealed
-        startTimer(60000); // 60 seconds
+        startTimer(30000); // 60 seconds
     });
 
     // FOR MEMES:
@@ -138,7 +139,7 @@ $(document).ready(function() {
         }
         
         // Start the timer when the question is revealed
-        startTimer(50000); // 50 seconds
+        startTimer(30000); // 50 seconds
     });
 
     //FOR MATHS:
@@ -149,30 +150,30 @@ $(document).ready(function() {
         $("#questionPopup").css("display", "flex");
 
         // Start the timer when the question is revealed
-        startTimer(40000); // 40 seconds
-    });
-
-    //FOR TIE BREAKER:
-    $("#tbRevealButton").on("click", function() {
-        const questionText = "What is the name of a mathematical knot that cannot be unknotted without cutting it?";
-        $("#wildcardPopup").css("display", "none");
-        $("#revealedQuestionText").text(questionText);
-        $("#questionPopup").css("display", "flex");
-
-        // Start the timer when the question is revealed
         startTimer(30000); // 40 seconds
     });
 
-    //FOR RAPID FIRE:
-    $("#rfRevealButton").on("click", function() {
-        const questionText = "What is the capital of France?";
-        $("#wildcardPopup").css("display", "none");
-        $("#revealedQuestionText").text(questionText);
-        $("#questionPopup").css("display", "flex");
+    //FOR TIE BREAKER:
+    // $("#tbRevealButton").on("click", function() {
+    //     const questionText = "";
+    //     $("#wildcardPopup").css("display", "none");
+    //     $("#revealedQuestionText").text(questionText);
+    //     $("#questionPopup").css("display", "flex");
 
-        // Start the timer when the question is revealed
-        startTimer(15000); // 40 seconds
-    });
+    //     // Start the timer when the question is revealed
+    //     startTimer(15000); // 40 seconds
+    // });
+
+    //FOR RAPID FIRE:
+    // $("#rfRevealButton").on("click", function() {
+    //     const questionText = "";
+    //     $("#wildcardPopup").css("display", "none");
+    //     $("#revealedQuestionText").text(questionText);
+    //     $("#questionPopup").css("display", "flex");
+
+    //     // Start the timer when the question is revealed
+    //     startTimer(15000); // 40 seconds
+    // });
 
     // FOR SPORTS:
     $("#sportsRevealButton").on("click", function() {
@@ -187,7 +188,7 @@ $(document).ready(function() {
         $("#revealedAudioContainer").append(audioElement);
 
         // Start the timer when the question is revealed
-        startTimer(20000); // 20 seconds
+        startTimer(30000); // 20 seconds
     });
 
     //FOR SONGS:
@@ -202,7 +203,7 @@ $(document).ready(function() {
         const img = $("<img>").attr("src", imageUrl).addClass("w-full h-full object-contain rounded");
         $("#revealedImageContainer").append(img);
 
-        startTimer(50000); // Set a timer for 50 seconds
+        startTimer(30000); // Set a timer for 50 seconds
     });
 
     $("#closeQuestionButton").on("click", function() {
@@ -231,7 +232,7 @@ $(document).ready(function() {
             durationInSeconds = 15;
         } else {
             // Calculate duration for other categories (100 points = 10s, 200 points = 20s, etc.)
-            durationInSeconds = points / 10;
+            durationInSeconds = 30;
         }
 
         window.questionTimer = setTimeout(function() {
@@ -246,4 +247,75 @@ $(document).ready(function() {
     $("#closeTimesUpButton").on("click", function() {
         $("#timesUpPopup").css("display", "none");
     });
+
+    // RESET button
+    $("#resetBtn").on("click", function (e) {
+        e.preventDefault();
+        localStorage.clear();
+
+        alert("The page is not Reset.");
+        location.reload();
+    });
+    
+    //POWERUPS
+    $("#powerupBtnGames").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupGames").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupGames").addClass("hidden");
+      }, 7000);
+    });
+
+    $("#powerupBtnMaths").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupMaths").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupMaths").addClass("hidden");
+      }, 7000);
+    });
+
+    $("#powerupBtnMemes").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupMemes").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupMemes").addClass("hidden");
+      }, 7000);
+    });
+
+    $("#powerupBtnMovies").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupMovies").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupMovies").addClass("hidden");
+      }, 7000);
+    });
+
+    $("#powerupBtnSongs").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupSongs").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupSongs").addClass("hidden");
+      }, 7000);
+    });
+
+    $("#powerupBtnSports").on("click", function (e) {
+      e.preventDefault();
+      // Show popup
+      $("#rewardPopupSports").removeClass("hidden");
+      // Hide popup after 7 seconds
+      setTimeout(function () {
+        $("#rewardPopupSports").addClass("hidden");
+      }, 7000);
+    });
+
 });

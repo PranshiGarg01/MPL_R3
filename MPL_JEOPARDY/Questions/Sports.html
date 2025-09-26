@@ -137,8 +137,8 @@
         </a>
         <div class="flex items-center space-x-12 ml-auto">
             <a href="./demo.html" class="text-white hover:text-green-400 transition-colors duration-300 text-lg">Home</a>
-            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300 text-lg">Powerup</a>
-            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300 text-lg">Reset</a>
+            <a href="#" id="powerupBtnSports" class="text-white hover:text-green-400 transition-colors duration-300 text-lg">Powerup</a>
+            <a href="./demo.html" id="resetBtn" class="text-white hover:text-green-400 transition-colors duration-300 text-lg">Reset</a>
             <a href="./Scoreboard/Scoreboard.html">
                 <button class="bg-green-500 hover:bg-green-400 text-[#0d0a00] font-bold py-3 px-8 rounded-full shadow-md transition-colors duration-300 text-lg">
                     Scoreboard
@@ -294,6 +294,13 @@
                 Close
             </button>
         </div>
+    </div>
+
+    <!-- Reward Popup  -->
+    <div id="rewardPopupSports" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-green-500 hover:bg-green-400 text-[#000d06] font-bold text-3xl p-12 rounded-2xl shadow-2xl animate-bounce shadow-md mt-4 text-center max-w-lg">
+        🎯 Double the points for any question you are going to answer!<br>(Use only before answering the question)
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
